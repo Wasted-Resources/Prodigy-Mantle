@@ -15,9 +15,10 @@ public class TemplateProcessor : AssetModificationProcessor
     private const string EmailPlaceholder   = "[Email]";
     private const string DatePlaceholder    = "#DATE#";
 
-    [SerializeField] private const string OrgProjectName = "Prodigy-Mantle";
-    [SerializeField] private const string OrgAuthorName  = "Christof Kloninger";
-    [SerializeField] private const string OrgAuthorEmail = "gme.24.kloninger@gmail.com";
+//TODO make this usable for other projects to assign the specs in Editor
+    private const string OrgProjectName = "Prodigy-Mantle";             // Change this for your specifications
+    private const string OrgAuthorName  = "Christof Kloninger";         // Change this for your specifications
+    private const string OrgAuthorEmail = "gme.24.kloninger@gmail.com"; // Change this for your specifications
 
     /// <summary>
     /// Unity calls this method whenever a new asset is created.
@@ -45,5 +46,12 @@ public class TemplateProcessor : AssetModificationProcessor
         {
             Debug.LogError($"[Wasted Resources] Automation failed for {assetPath}: {e.Message}");
         }
+    }
+
+    [MenuItem("Assets/Create/WastedResources/New Mono Script", false, 1)]
+    public static void CreateScript()
+    {
+        string templatePath = "Assets/Editor/Templates/WastedResourcesUnityTemplate.cs.txt" ;
+        ProjectWindowUtil.CreateScriptAssetFromTemplateFile(templatePath, "NewWastedScript.cs");
     }
 }
