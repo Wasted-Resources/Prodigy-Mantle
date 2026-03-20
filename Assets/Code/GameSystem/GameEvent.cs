@@ -39,8 +39,7 @@ Use side comments in line to describe lines that obfuscate their function as exp
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName ="New GameEvent", menuName ="Events/Game Event")]
-public class GameEvent : ScriptableObject
+public abstract class GameEventBase : ScriptableObject
 {
     #region Inspector
 #if UNITY_EDITOR
@@ -51,7 +50,7 @@ public class GameEvent : ScriptableObject
 
     #region Internal
     // List of listeners currently registered to this event
-    private readonly List<GameEventListener> _listeners = new() ;
+    private readonly List<GameEventListenerBase> _listeners = new() ;
     private bool _isRaising ;
     #endregion
 
@@ -60,14 +59,14 @@ public class GameEvent : ScriptableObject
     /// <summary>
     /// Broadcasts this event to all currently registered listeners. Call this from any MonoBehaviour or ScriptableObject that owns a reference to this asset.
     /// </summary>
-    public void Raise()
+    public void NotifyListeners(object data)
     {
         if (_isRaising) return ;
         _isRaising = true ;
         // Backwards Iteration is established to so listeners can safely deregister themselves during their own response without invalidating the loop on accident.
         for (int i = _listeners.Count -1 ; i >= 0 ; i--)
         {
-            _listeners[i].OnEventRaised(this) ;
+            _listeners[i].OnEventRaised(this, data) ;
         }
         _isRaising = false ;
     }
@@ -76,7 +75,7 @@ public class GameEvent : ScriptableObject
     /// Registers a listener to receive notification when this event is raised. Called automatically by GameEventListener.OnEnable.
     /// </summary>
     /// <param name="listener">The GameEventListener component registering itself</param>
-    public void RegisterListener(GameEventListener listener)
+    public void RegisterListener(GameEventListenerBase listener)
     {
         if(!_listeners.Contains(listener))  _listeners.Add(listener) ;
     }
@@ -85,7 +84,7 @@ public class GameEvent : ScriptableObject
     /// Removes a listener from the notification list. Called automatically by GameEventListener.OnDisable.
     /// </summary>
     /// <param name="listener">The GameEventListener component de-registering itself</param>
-    public void DeregisterListener(GameEventListener listener)
+    public void DeregisterListener(GameEventListenerBase listener)
     {
         if(_listeners.Contains(listener))   _listeners.Remove(listener);
     }
@@ -93,3 +92,48 @@ public class GameEvent : ScriptableObject
 
     #endregion
 }
+
+[CreateAssetMenu(fileName ="New GameEvent", menuName ="Events/Game Event")]
+
+public class GameEvent : GameEventBase
+{
+    /// <summary>
+    /// Broadcasts this signal to all registered listeners without payload.
+    /// Used for transitions and queries where no data is needed.
+    /// </summary>
+    public void Raise() => NotifyListeners(null) ;
+}
+
+
+#region Type Events
+public abstract class GameEvent<T> : GameEventBase
+{
+    /// <summary>
+    /// Broadcasts this signal to all registered listeners with an attached payload.
+    /// The payload is passed through the notification chain. How to implement these, look into TypeGameEventListener
+    /// </summary>
+    /// <param name="data"></param>
+    public void Raise(T data) => NotifyListeners(data) ;
+}
+
+#region Subclasses
+/// <summary>
+/// Pure Signal event. Passes through empty data struct. No payload needed for those.
+/// Deprecated.
+/// </summary>
+[CreateAssetMenu(fileName ="new GOEvent", menuName ="Events/GameObject Event")]
+public class GameObjectEvent : GameEvent<GameObject> { }
+
+// WeaponEvent
+//TODO Replace this GameObject reference with the definition once weapon system is developed
+[CreateAssetMenu(fileName ="new WeaponEvent", menuName ="Events/Weapon Event")]
+public class WeaponEvent : GameEvent<GameObject> { } // Here Mr Inquisitor
+
+// TypeEvent
+[CreateAssetMenu(fileName ="new TypeEvent", menuName ="Events/Type Event")]
+public class TypeEvent : GameEvent<TypeSO> { } // Here Mr Inquisitor
+
+
+#endregion
+
+#endregion
