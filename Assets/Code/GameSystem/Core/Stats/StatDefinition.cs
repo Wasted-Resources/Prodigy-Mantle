@@ -44,7 +44,7 @@ Use side comments in line to describe lines that obfuscate their function as exp
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New StatDefinition", menuName = "Definitions/Stat Definition")]
-public class StatDefinition : ScriptableObject, INamedAsset
+public class StatDefinition : ScriptableObject, IHaveTypes
 {
     #region Inspector
 #if UNITY_EDITOR

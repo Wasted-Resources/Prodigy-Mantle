@@ -37,14 +37,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="New EnemyDefinition", menuName ="Definitions/Enemy Definition")]
-public class EnemyDefinition : ScriptableObject, INamedAsset
+public class EnemyDefinition : ScriptableObject, IHaveTypes
 {
     #region Inspector
 #if UNITY_EDITOR
     [TextArea] public string DeveloperDescription = string.Empty ;
 #endif
  
-    [SerializeField] private string _assetName;
     [Header("Classification")]
     [SerializeField] private EnemyType _enemyType ;
     [SerializeField] private FactionType _faction ;
@@ -60,8 +59,6 @@ public class EnemyDefinition : ScriptableObject, INamedAsset
 
 
     #region Public Getters
-    public string AssetName => _assetName ;
-
     public TypeSO AssetType => _enemyType ;
     public EnemyType EnemyType => _enemyType ;
     public FactionType Faction => _faction ;

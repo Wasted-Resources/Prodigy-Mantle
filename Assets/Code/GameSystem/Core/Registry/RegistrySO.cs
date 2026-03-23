@@ -78,13 +78,14 @@ public abstract class Registry<T> : ScriptableObject where T : ScriptableObject
     /// Brief description of the method.
     /// </summary>
     /// <param name = "parameters">What this parameter represents </param>
+    // TODO : Check in on the entry. since that is either kind of redundant or deprecated. Sleep now
     public List<T> GetAllOfType(TypeSO type)
     {
         var results = new List<T>() ;
         foreach (var entry in _entries)
         {
             if (entry == null) continue ;
-            if (entry is INamedAsset named && named.AssetType == type)
+            if (entry == type)
                 results.Add(entry) ;
         }
         return results ;
@@ -125,7 +126,7 @@ public abstract class Registry<T> : ScriptableObject where T : ScriptableObject
 #endif
     #endregion
 }
-public abstract class NamedRegistry<T> : Registry<T> where T : ScriptableObject, INamedAsset
+public abstract class NamedRegistry<T> : Registry<T> where T : ScriptableObject
 {
-    public T GetByName(string assetName) => Get(entry => entry.AssetName == assetName) ;
+    public T GetByName(string assetName) => Get(entry => entry.name == assetName) ;
 }
