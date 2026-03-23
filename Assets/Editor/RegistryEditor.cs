@@ -1,9 +1,9 @@
 #region Project Details
 /*
-* Project: [Project Name]
-* Author:[Author] / [Email]
-* Issue: Link: https://github.com/Wasted-Resources/[Project Name]/issues/[ID]
-* Date: #DATE#
+* Project: Prodigy-Mantle
+* Author:Christof Kloninger / gme.24.kloninger@gmail.com
+* Issue: Link: https://github.com/Wasted-Resources/Prodigy-Mantle/issues/[ID]
+* Date: 2026-03-23
 */
 #endregion
 
@@ -32,34 +32,19 @@ Use side comments in line to describe lines that obfuscate their function as exp
 /// </summary>
 #endregion
 
-
+using UnityEditor;
 using UnityEngine;
 
-
-public class #SCRIPTNAME# : MonoBehaviour
+[CustomEditor(typeof(Registry<>), true)]
+public class RegistryEditor : Editor
 {
-    #region Inspector
 #if UNITY_EDITOR
     [TextArea] public string DeveloperDescription = string.Empty ;
 #endif
-    [SerializeField] private assetName ;
-    
-    #endregion
-    #region Internal
-    private int someValue;
-    #endregion
-
-    
-    #region Methods
-    /// <summary>
-    /// Brief description of the method.
-    /// </summary>
-    /// <param name = "parameters">What this parameter represents </param>
-    public void GoodMethod(int parameters)
+    public override void OnInspectorGUI()
     {
-        /* --- CodeBlock: Logic Execution --- */
-        // Description: Describe the intent of this specific block
-        var value = parameters * 2;   // Descriptive comment for specific line, if necessary
+        DrawDefaultInspector();
+        var registry = target as dynamic ;
+        if (GUILayout.Button("Synchronize with Folder")) registry.PopulateFromFolder();
     }
-    #endregion
 }

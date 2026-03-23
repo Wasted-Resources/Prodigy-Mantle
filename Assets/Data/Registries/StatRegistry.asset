@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 083359b06fc644840abf0a73bd761bde, type: 3}
+  m_Name: StatRegistry
+  m_EditorClassIdentifier: Assembly-CSharp::StatRegistry
+  DeveloperDescription: Collection of all Stats that live throughout the project
+    and need to serve as blueprint data for stats in general that need do not fit
+    into the variable only category which is reserved for Singleton Stats like PlayerScore.
+  _entries:
+  - {fileID: 11400000, guid: 639eb778dbac5dd4dba00772ab36da4d, type: 2}
+  - {fileID: 11400000, guid: 310386016a0e27a419479a82891584c6, type: 2}
+  - {fileID: 11400000, guid: 71d75c26392eadf4f83584be6742a6eb, type: 2}
+  - {fileID: 11400000, guid: 355e99cea3ddd0d4a8f1e3a83790382e, type: 2}
+  - {fileID: 11400000, guid: 1a883324f19067e4988a38dbd5334c79, type: 2}
+  - {fileID: 11400000, guid: 77e7c8e6c6af80a4f9660f9387f102b7, type: 2}
+  - {fileID: 11400000, guid: 1be4690faf48efb44866bb1fa79d73de, type: 2}
+  - {fileID: 11400000, guid: e1771e5fba665514c9d0fd61cac25b3d, type: 2}
+  - {fileID: 11400000, guid: ae67849719a8f6a4b8ba0fd2090e99ee, type: 2}
+  - {fileID: 11400000, guid: 9799ab0f6cb705245836f1b1a998468e, type: 2}
+  - {fileID: 11400000, guid: 54762928094b884479b94f5516b3251a, type: 2}
+  - {fileID: 11400000, guid: 691d3505290bd184d91764ff4f606162, type: 2}
+  - {fileID: 11400000, guid: c5335929a952b314a8365e1ac17ea246, type: 2}
+  - {fileID: 11400000, guid: 8c2fd84b857148940a59295482a7c896, type: 2}
+  - {fileID: 11400000, guid: 1a295b762a57f3c42aa85bd28c4da4d9, type: 2}
+  - {fileID: 11400000, guid: da65472b58dbb274da3b9c39e11cb27d, type: 2}
+  - {fileID: 11400000, guid: 1b226465b201ec04bb0b16c49cceaf69, type: 2}
+  - {fileID: 11400000, guid: 95dd5372d342c474f81712d15a9485a0, type: 2}
+  - {fileID: 11400000, guid: de083c11acd160c4d81525f48ac1eff4, type: 2}
+  - {fileID: 11400000, guid: 0b178075cc2c0f44d953ba1f0caa8a50, type: 2}
+  - {fileID: 11400000, guid: 3c43c3efac327024eae725c0a2266bea, type: 2}
+  _searchFolder: {fileID: 102900000, guid: 1145f7f22780c684cab6cc1c4e59f59b, type: 3}
