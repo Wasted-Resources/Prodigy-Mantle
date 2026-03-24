@@ -34,13 +34,37 @@ using System;
 using UnityEngine;
 
 #region Abstract class
-public abstract class Reference<T, TVariable> where TVariable : Variable<T>
+public abstract class BaseReference {public abstract ScriptableObject GetVariableAsset(); }
+public abstract class Reference<T, TVariable> : BaseReference where TVariable : Variable<T>
 {
+    #region Inspector
     [TextArea] public string Description ;
+    [Tooltip("When true, uses the constant value."+"When false, reads from the assigned FloatVariable asset")]
     [SerializeField] private bool _useConstant = true ;
     [SerializeField] private T _constantValue ;
     [SerializeField] private TVariable _variable ;
+    #endregion
+
+
+    #region Public Getters
+    public override ScriptableObject GetVariableAsset() => _variable ;
+    public TVariable Variable => _variable ;
+    public bool HasVariable => !_useConstant && _variable != null ;
     public T Value => _useConstant ? _constantValue : (_variable != null ? _variable.Value : _constantValue) ;
+
+    #endregion
+
+
+    #region Methods
+    public T GetValue(RuntimeStats localSource = null)
+    {
+        if (_useConstant || _variable == null) return _constantValue ;
+        if (localSource != null) return localSource.Get(_variable);
+        return _variable.Value ;
+    }
+
+    #endregion
+
 }
 #endregion
 

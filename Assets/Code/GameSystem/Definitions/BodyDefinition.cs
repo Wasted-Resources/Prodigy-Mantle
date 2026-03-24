@@ -38,14 +38,12 @@ Use side comments in line to describe lines that obfuscate their function as exp
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New BodyDefinition", menuName = "Definitions/Body Definition")]
-public class BodyDefinition : ScriptableObject, INamedAsset
+public class BodyDefinition : ScriptableObject
 {
     #region Inspector
 #if UNITY_EDITOR
     [TextArea] public string DeveloperDescription = string.Empty ;
 #endif
-
-    [SerializeField] private string _assetName ;
     [SerializeField] private BodyType _bodyType ;
     [SerializeField] private StatSheet _statSheet ;
     [SerializeField] private GameObject _prefab ;
@@ -55,8 +53,6 @@ public class BodyDefinition : ScriptableObject, INamedAsset
 
 
     #region Public Getters
-    public string AssetName => _assetName;
-
     public TypeSO AssetType => _bodyType;
     public BodyType BodyType => _bodyType ;
     public StatSheet StatSheet => _statSheet ;

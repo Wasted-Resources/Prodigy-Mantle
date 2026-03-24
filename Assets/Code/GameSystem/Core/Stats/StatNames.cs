@@ -22,7 +22,7 @@ Use side comments in line to describe lines that obfuscate their function as exp
 #region Development remarks
 /// <remarks>
 /// <para>
-/// This class handles [Core Responsibility]. It must maintain [Architecture Constraint, e.g., Singleton].
+/// This class handles nothing. It must maintain nothing. It is deprecated before deployment. And is now just a notebook.
 /// </para>
 /// </remarks>
 /// <summary>

@@ -55,6 +55,7 @@ public abstract class Registry<T> : ScriptableObject where T : ScriptableObject
     
 
     #region Public Getters
+    //TODO Comment your stuff, come on
     public IReadOnlyList<T> AllEntries => _entries ;
 
     public T Get(System.Func<T, bool> predicate)
@@ -63,22 +64,15 @@ public abstract class Registry<T> : ScriptableObject where T : ScriptableObject
             if (entry != null && predicate(entry)) return entry ;
         return null ;
     }
-    public List<T> GetAll(System.Func<T,bool> predicate)
+    public T GetByName(string assetName) => Get(entry => entry.name == assetName);
+    public List<T> GetAll(System.Func<T, bool> predicate)
     {
         var results = new List<T>() ;
         foreach (var entry in _entries)
             if (entry != null && predicate(entry))
-                results.Add(entry) ;
+                results.Add(entry);
         return results ;
     }
-    #endregion
-    
-    #region Methods
-    /// <summary>
-    /// Brief description of the method.
-    /// </summary>
-    /// <param name = "parameters">What this parameter represents </param>
-    // TODO : Check in on the entry. since that is either kind of redundant or deprecated. Sleep now
     public List<T> GetAllOfType(TypeSO type)
     {
         var results = new List<T>() ;
@@ -125,8 +119,4 @@ public abstract class Registry<T> : ScriptableObject where T : ScriptableObject
     }
 #endif
     #endregion
-}
-public abstract class NamedRegistry<T> : Registry<T> where T : ScriptableObject
-{
-    public T GetByName(string assetName) => Get(entry => entry.name == assetName) ;
 }

@@ -37,7 +37,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="New EnemyDefinition", menuName ="Definitions/Enemy Definition")]
-public class EnemyDefinition : ScriptableObject, IHaveTypes
+public class EnemyDefinition : ScriptableObject
 {
     #region Inspector
 #if UNITY_EDITOR

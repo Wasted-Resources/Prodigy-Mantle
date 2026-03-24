@@ -33,17 +33,15 @@ Use side comments in line to describe lines that obfuscate their function as exp
 #endregion
 
 
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="New WeaponDefinition", menuName = "Definitions/Weapon Definition")]
-public class WeaponDefinition : ScriptableObject, INamedAsset
+public class WeaponDefinition : ScriptableObject
 {
     #region Inspector
 #if UNITY_EDITOR
     [TextArea] public string DeveloperDescription = string.Empty ;
 #endif
-    [SerializeField] private string _assetName ;
     [SerializeField] private WeaponType _weaponType ;
 
     [Header("Combat")]
@@ -62,8 +60,6 @@ public class WeaponDefinition : ScriptableObject, INamedAsset
 
 
     #region Public Getters 
-    public string AssetName => _assetName ;
-
     public TypeSO AssetType => _weaponType;
     public WeaponType WeaponType => _weaponType ;
     public StatSheet WeaponStats => _weaponStats ;

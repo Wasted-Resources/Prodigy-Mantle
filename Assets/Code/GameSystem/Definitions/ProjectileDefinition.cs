@@ -36,13 +36,12 @@ Use side comments in line to describe lines that obfuscate their function as exp
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New ProjectileDefinition", menuName = "Definitions/Projectile Definition")]
-public class ProjectileDefinition : ScriptableObject, INamedAsset
+public class ProjectileDefinition : ScriptableObject
 {
     #region Inspector
 #if UNITY_EDITOR
     [TextArea] public string DeveloperDescription = string.Empty ;
 #endif
-    [SerializeField] private string _assetName ;
     [SerializeField] private ProjectileType projectileType ;
     [SerializeField] private DamageType damageType;
     [Header("Combat")]
@@ -56,8 +55,6 @@ public class ProjectileDefinition : ScriptableObject, INamedAsset
 
 
     #region Public Getters
-    public string AssetName => _assetName;
-
     public TypeSO AssetType => projectileType;
     public DamageType DamageType => damageType ;
     public StatSheet ProjectileStats => _projectileStats ;

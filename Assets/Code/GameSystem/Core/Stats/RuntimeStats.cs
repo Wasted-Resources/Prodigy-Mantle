@@ -2,7 +2,7 @@
 /*
 * Project: Prodigy-Mantle
 * Author:Christof Kloninger / gme.24.kloninger@gmail.com
-* Issue: Link: https://github.com/Wasted-Resources/Prodigy-Mantle/issues/[ID]
+* Issue: Link: https://github.com/Wasted-Resources/Prodigy-Mantle/issues/14
 * Date: 2026-03-20
 */
 #endregion
@@ -22,37 +22,64 @@ Use side comments in line to describe lines that obfuscate their function as exp
 #region Development remarks
 /// <remarks>
 /// <para>
-/// This class handles [Core Responsibility]. It must maintain [Architecture Constraint, e.g., Singleton].
+/// This class handles the per-instance live stat container for a single entity. It is initialized from StatSheet at Awake.
+/// StatSheet holds the Reference lists pointing at Variable assets. RuntimeStats iterates those lists at Initialize(), 
+/// reads Variable.name as ker and Variable.ClampedInitialValue as value, and stores them in typed dictionaries.
 /// </para>
 /// </remarks>
 /// <summary>
-/// Description: [Describe what this class does].
-/// Coordination: [How it communicates with APIs or other Components].
-/// Deployment: [Where it should live in the Scene, Project, Assets'].
+/// Description: Per-instance live stat container. Dictionary-backed. Initialized by iterating StatSheet Reference lists at Awake.
+/// Coordination: Owned by behaviour components.
+/// Deployment: Instantiated as a private field on a MonoBehaviour.
 /// </summary>
 #endregion
 
-
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
 public class RuntimeStats : MonoBehaviour
 {
     #region Internal
-    private int someValue;
+    private readonly Dictionary<ScriptableObject, object> _instances = new() ;
     #endregion
 
+
+    #region Public Getters
+    public IReadOnlyDictionary<ScriptableObject, object> Instances => _instances;
+
+    #endregion
     
     #region Methods
-    /// <summary>
-    /// Brief description of the method.
-    /// </summary>
-    /// <param name = "parameters">What this parameter represents </param>
-    public void GoodMethod(int parameters)
+    public void Initialize(StatSheet sheet)
     {
-        /* --- CodeBlock: Logic Execution --- */
-        // Description: Describe the intent of this specific block
-        var value = parameters * 2;   // Descriptive comment for specific line, if necessary
+        _instances.Clear();
+        //TODO WHYYYYY????
+        RegisterStats(sheet.FloatStats.Cast<BaseReference>());
+        RegisterStats(sheet.BoolStats.Cast<BaseReference>());
+    }
+
+    private void RegisterStats(IEnumerable<BaseReference> refs)
+    {
+        foreach (var rf in refs)
+        {
+            var asset = rf.GetVariableAsset();
+            if (asset is IInstanceProvider provider) _instances[asset] = provider.CreateInstance();
+        }
+    }
+    public void Set<T>(Variable<T> asset, T newValue)
+    {
+        if (_instances.TryGetValue(asset, out object instance))
+            ((StatInstance<T>)instance).SetValue(newValue);
+        else
+            asset.Value = newValue ;
+    }
+    public T Get<T>(Variable<T> asset)
+    {
+        if (_instances.TryGetValue(asset, out object instance))
+            return ((StatInstance<T>)instance).Value ;
+        return asset.Value ;
     }
     #endregion
 }

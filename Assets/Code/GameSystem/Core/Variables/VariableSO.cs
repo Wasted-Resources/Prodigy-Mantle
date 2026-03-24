@@ -37,7 +37,7 @@ using System;
 using UnityEngine;
 
 
-public abstract class Variable<T> : ScriptableObject, ISerializationCallbackReceiver
+public abstract class Variable<T> : ScriptableObject, ISerializationCallbackReceiver, IInstanceProvider
 {
     #region Inspector
 #if UNITY_EDITOR
@@ -57,6 +57,7 @@ public abstract class Variable<T> : ScriptableObject, ISerializationCallbackRece
         set => SetValue(value);
     }
     public event Action<T> OnValueChanged ;
+    public virtual T ClampValue(T value) => value;
     #endregion
 
 
@@ -71,10 +72,12 @@ public abstract class Variable<T> : ScriptableObject, ISerializationCallbackRece
         _runtimeValue = value ;
         OnValueChanged?.Invoke(_runtimeValue) ;
     }
+
+    public object CreateInstance() => new StatInstance<T>(this) ;
     #endregion
 
 }
-
+public interface IInstanceProvider{ object CreateInstance() ; } // This is absolute BS
 #region Variable Definitions
-// were moved to their own Scripts. For Unity Reasons
+// were moved to their own Scripts. These are all present in this script's file directory.
 #endregion
