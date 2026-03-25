@@ -107,7 +107,7 @@ public abstract class TypedGameEventListener<T, TEvent> : GameEventListenerBase 
 
 
 #region Typed Event Listener Definitions
-
+[AddComponentMenu("WastedResources/EventSystem/GO EventListener")]
 public class GameObjectEventListener : TypedGameEventListener<GameObject, GameObjectEvent>
 {
     #region Inspector
@@ -119,7 +119,7 @@ public class GameObjectEventListener : TypedGameEventListener<GameObject, GameOb
 
 }
 
-
+[AddComponentMenu("WastedResources/EventSystem/Weapon EventListener")]
 public class WeaponGameEventListener : TypedGameEventListener<GameObject, WeaponEvent>
 {
     #region Inspector
@@ -141,10 +141,10 @@ public class WeaponGameEventListener : TypedGameEventListener<GameObject, Weapon
 public class GameEventResponse
 {
     #region Inspector
-    [SerializeField] private GameEvent _event ;
+    [SerializeField] private GameEventBase _event ;
     [SerializeField] private UnityEvent _response ;
 
-    public GameEvent Event => _event ;
+    public GameEventBase Event => _event ;
 
     public void Raise() => _response?.Invoke() ;
     #endregion
