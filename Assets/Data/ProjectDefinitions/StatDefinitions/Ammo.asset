@@ -9,13 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcc041983e968f444bc631eaea9fedbb, type: 3}
+  m_Script: {fileID: 11500000, guid: 522df932fab9b294cb7519693b385ded, type: 3}
   m_Name: Ammo
-  m_EditorClassIdentifier: Assembly-CSharp::StatDefinition
-  DeveloperDescription: Current Ammo amount. Flexible to determine either current
-    amount a weapon has available or to define the number of bullets per shot
-  _statName: Ammo
-  _defaultValue: 0
-  _minValue: 0
-  _maxValue: 9999
-  _optional: 1
+  m_EditorClassIdentifier: Assembly-CSharp::IntegerVariable
+  DeveloperDescription: Current Ammunition count of a weapon
+  _initialValue: 0

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 // Float
 [CreateAssetMenu(fileName = "New Float Variable", menuName ="Variables/Float Variable")]
@@ -9,5 +8,5 @@ public class FloatVariable : Variable<float>
 
     public float MinValue => _minValue ;
     public float MaxValue => _maxValue ;
-    public float ClampedInitialValue => Mathf.Clamp(InitialValue, _minValue, _maxValue) ;
+    public override float ClampValue(float value) => Mathf.Clamp(value, _minValue, _maxValue) ;
 }

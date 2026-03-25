@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcc041983e968f444bc631eaea9fedbb, type: 3}
+  m_Script: {fileID: 11500000, guid: cb0b24829539dda43be5d2053784f49a, type: 3}
   m_Name: Lifetime
-  m_EditorClassIdentifier: Assembly-CSharp::StatDefinition
-  DeveloperDescription: Lifetime of an object, most likely projectiles. in seconds
-  _statName: Lifetime
-  _defaultValue: 0
+  m_EditorClassIdentifier: Assembly-CSharp::FloatVariable
+  DeveloperDescription: 'Lifetime of an object, measured in seconds.
+
+    Primary
+    Use: Projectiles'
+  _initialValue: 1
   _minValue: 0
   _maxValue: 9999
-  _optional: 1

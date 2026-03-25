@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551654acdf38105498ff1d5510eb5fe0, type: 3}
+  m_Name: PlayerSuitStatSheet
+  m_EditorClassIdentifier: Assembly-CSharp::StatSheet
+  DeveloperDescription: The Player Suit is currently the Base Suit for the player
+    that holds all the references that define their Body. Meaning Vitals and so on.
+  _description: This advanced Suit of armor is enabling any member of the Force to
+    exceptional feats. They support a wide array of weapon mounts and can be customized
+    to each Soldiers strenghts.
+  _floatStats:
+  - description: Health
+    _useLocalValue: 0
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: 45930b4286dd61944928bf23e78a012f, type: 2}
+  - description: MaxHealth
+    _useLocalValue: 0
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: c8a281c414fa2ac42a65854582544191, type: 2}
+  - description: Energy
+    _useLocalValue: 0
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: 8003633441f052a4d8b03d3643e7b6cb, type: 2}
+  - description: MaxEnergy
+    _useLocalValue: 0
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: 0ba6d273e574ebd4fa08885c571eecaf, type: 2}
+  - description: MaxHealth
+    _useLocalValue: 0
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: c8a281c414fa2ac42a65854582544191, type: 2}
+  - description: MaxHealth
+    _useLocalValue: 1
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: c8a281c414fa2ac42a65854582544191, type: 2}
+  - description: MaxHealth
+    _useLocalValue: 1
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: c8a281c414fa2ac42a65854582544191, type: 2}
+  _boolStats: []

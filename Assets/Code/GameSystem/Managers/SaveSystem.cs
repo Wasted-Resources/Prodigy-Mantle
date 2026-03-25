@@ -2,7 +2,8 @@
 /*
 * Project: Prodigy-Mantle
 * Author:Christof Kloninger / gme.24.kloninger@gmail.com
-* Issue: Link: https://github.com/Wasted-Resources/Prodigy-Mantle/issues/[ID]
+* Issue: Link: https://github.com/Wasted-Resources/Prodigy-Mantle/issues/21
+* Source: Older project: [Insert the link to the project]
 * Date: 2026-03-23
 */
 #endregion
@@ -34,32 +35,54 @@ Use side comments in line to describe lines that obfuscate their function as exp
 
 
 using UnityEngine;
+using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
-
-public class SaveSystem : MonoBehaviour
+/// <summary>
+/// Copied from older project, probably needs some adjustments
+/// </summary>
+public static class SaveSystem
 {
-    #region Inspector
-#if UNITY_EDITOR
-    [TextArea] public string DeveloperDescription = string.Empty ;
-#endif
-    [SerializeField] private string assetName ;
-    
-    #endregion
-    #region Internal
-    private int someValue;
-    #endregion
-
-    
-    #region Methods
-    /// <summary>
-    /// Brief description of the method.
-    /// </summary>
-    /// <param name = "parameters">What this parameter represents </param>
-    public void GoodMethod(int parameters)
+#region Encryption/Decryption
+    private static readonly byte[] Key = Encoding.UTF8.GetBytes( "0123456789abcdef" ) ;
+    private static readonly byte[] Iv = Encoding.UTF8.GetBytes( "abcdef0123456789" ) ;
+    public static byte[] Encrypt( string plainText )
     {
-        /* --- CodeBlock: Logic Execution --- */
-        // Description: Describe the intent of this specific block
-        var value = parameters * 2;   // Descriptive comment for specific line, if necessary
+        if ( string.IsNullOrEmpty( plainText ))  throw new ArgumentNullException( nameof( plainText ) );
+
+        using Aes aes = Aes.Create();
+        aes.Key = Key;
+        aes.IV = Iv;
+        using MemoryStream memoryStream = new() ;
+        ICryptoTransform encryptor = aes.CreateEncryptor( aes.Key , aes.IV ) ;
+        using (CryptoStream cryptoStream = new( memoryStream , encryptor , CryptoStreamMode.Write ) )
+        using (StreamWriter writer = new( cryptoStream , Encoding.UTF8 ) )
+        {
+        writer.Write( plainText ) ;
+        }
+        return memoryStream.ToArray();
     }
-    #endregion
+
+    public static string Decrypt(byte[] cipherData)
+    {
+        if (cipherData == null || cipherData.Length == 0)
+            throw new ArgumentNullException(nameof(cipherData));
+
+        using Aes aes = Aes.Create();
+        aes.Key = Key;
+        aes.IV = Iv;
+        using MemoryStream memoryStream = new(cipherData);
+        using CryptoStream cryptoStream = new(memoryStream, aes.CreateDecryptor(), CryptoStreamMode.Read);
+        using StreamReader reader = new(cryptoStream, Encoding.UTF8);
+        return reader.ReadToEnd();
+    }
+#endregion
+
+
+#region De-/Serialization
+    public static string SerializeData( object obj ) { return JsonUtility.ToJson( obj ) ; }
+    public static T DeserializeData<T>(string jsonData) { return JsonUtility.FromJson<T>(jsonData) ; }
+#endregion
 }

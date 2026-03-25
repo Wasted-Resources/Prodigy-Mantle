@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a13d47c35d198448f4a9f32eca676b, type: 3}
   m_Name: Muted
   m_EditorClassIdentifier: Assembly-CSharp::BoolVariable
-  DeveloperDescription: 
+  DeveloperDescription: Toggle to mute/unmute Sounds
   _initialValue: 0

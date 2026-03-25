@@ -35,22 +35,25 @@ using UnityEngine;
 
 #region Abstract class
 public abstract class BaseReference {public abstract ScriptableObject GetVariableAsset(); }
+
+[Serializable]
 public abstract class Reference<T, TVariable> : BaseReference where TVariable : Variable<T>
 {
     #region Inspector
-    [TextArea] public string Description ;
-    [Tooltip("When true, uses the constant value."+"When false, reads from the assigned FloatVariable asset")]
-    [SerializeField] private bool _useConstant = true ;
-    [SerializeField] private T _constantValue ;
+    [SerializeField] private string description ;
+    [Tooltip("When true, uses the local value."+"When false, reads from the assigned FloatVariable asset")]
+    [SerializeField] private bool _useLocalValue = true ;
+    [SerializeField] private T _localValue ;
     [SerializeField] private TVariable _variable ;
     #endregion
 
 
     #region Public Getters
+    public string Description => description ;
     public override ScriptableObject GetVariableAsset() => _variable ;
     public TVariable Variable => _variable ;
-    public bool HasVariable => !_useConstant && _variable != null ;
-    public T Value => _useConstant ? _constantValue : (_variable != null ? _variable.Value : _constantValue) ;
+    public bool HasVariable => !_useLocalValue && _variable != null ;
+    public T Value => _useLocalValue ? _localValue : (_variable != null ? _variable.Value : _localValue) ;
 
     #endregion
 
@@ -58,7 +61,7 @@ public abstract class Reference<T, TVariable> : BaseReference where TVariable : 
     #region Methods
     public T GetValue(RuntimeStats localSource = null)
     {
-        if (_useConstant || _variable == null) return _constantValue ;
+        if (_useLocalValue || _variable == null) return _localValue ;
         if (localSource != null) return localSource.Get(_variable);
         return _variable.Value ;
     }

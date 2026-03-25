@@ -32,7 +32,6 @@ Use side comments in line to describe lines that obfuscate their function as exp
 /// </summary>
 #endregion
 
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,44 +43,15 @@ public class StatSheet : ScriptableObject
     [TextArea] public string DeveloperDescription = string.Empty ;
 #endif
     [TextArea][SerializeField] private string _description ;
-    [SerializeField] private List<StatEntry> _stats = new() ;
+    [SerializeField] private List<FloatReference> _floatStats = new() ;
+    [SerializeField] private List<BoolReference> _boolStats = new() ;
 
     #endregion
 
 
     #region Public Getters
-    public string Description => _description ;
-    public float Get(string statName, float fallback = 0f)
-    {
-        foreach (var entry in _stats)
-            if (entry.Name == statName) return entry.Value ;
+    public IReadOnlyList<FloatReference> FloatStats => _floatStats ;
 
-        return fallback ;
-    }
-    public bool TryGet(string statName, out float value)
-    {
-        foreach (var entry in _stats)
-        {
-            if (entry.Name == statName)
-            {
-                value = entry.Value ;
-                return true ;
-            }
-        }
-        value = 0f ;
-        return false ;
-    }
-    #endregion
-}
-
-[Serializable]
-public class StatEntry
-{
-    #region Inspector
-    [SerializeField] private string _name ;
-    [SerializeField] private float _value ;
-
-    public string Name => _name ;
-    public float Value => _value ;
+    public IReadOnlyList<BoolReference> BoolStats => _boolStats ;
     #endregion
 }
