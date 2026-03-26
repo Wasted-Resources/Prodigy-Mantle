@@ -16,11 +16,23 @@ MonoBehaviour:
   _description: 
   _floatStats:
   - description: Damage
-    _useConstant: 1
-    _constantValue: 5
+    _useLocalValue: 1
+    _localValue: 0
     _variable: {fileID: 11400000, guid: 0feb8be4d2c5d0545ac38defc412531c, type: 2}
   - description: Lifetime
-    _useConstant: 1
-    _constantValue: 5
+    _useLocalValue: 1
+    _localValue: 0
     _variable: {fileID: 11400000, guid: dc17a8a6a9e8168449ce571a7572446b, type: 2}
+  - description: EffectiveRange
+    _useLocalValue: 1
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: d057ffbfd9442224891652e3330fbc81, type: 2}
+  - description: MaxRange
+    _useLocalValue: 1
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: 472e14e643cb319429cc916553af1003, type: 2}
+  - description: MaxRange
+    _useLocalValue: 1
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: 472e14e643cb319429cc916553af1003, type: 2}
   _boolStats: []

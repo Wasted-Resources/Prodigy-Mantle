@@ -34,10 +34,14 @@ MonoBehaviour:
     _useLocalValue: 0
     _localValue: 0
     _variable: {fileID: 11400000, guid: 0ba6d273e574ebd4fa08885c571eecaf, type: 2}
-  - description: MaxHealth
+  - description: Shield
     _useLocalValue: 0
     _localValue: 0
-    _variable: {fileID: 11400000, guid: c8a281c414fa2ac42a65854582544191, type: 2}
+    _variable: {fileID: 11400000, guid: 613bda2210d14314fa9a005f5faa085d, type: 2}
+  - description: MaxShield
+    _useLocalValue: 0
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: 4e6bbd8c6ad36b643990a7d76e25ceed, type: 2}
   - description: MaxHealth
     _useLocalValue: 1
     _localValue: 0

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: BodyRegistry
   m_EditorClassIdentifier: Assembly-CSharp::BodyRegistry
   DeveloperDescription: 
-  _entries: []
+  _entries:
+  - {fileID: 11400000, guid: a396586c549130c49957df5370febc2f, type: 2}
   _searchFolder: {fileID: 102900000, guid: 47fc979f54bd1d044a94f9ed1e3d7990, type: 3}
