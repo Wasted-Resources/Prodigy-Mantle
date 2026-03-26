@@ -19,27 +19,27 @@ MonoBehaviour:
     to each Soldiers strenghts.
   _floatStats:
   - description: Health
-    _useLocalValue: 0
+    _useLocalValue: 1
     _localValue: 0
     _variable: {fileID: 11400000, guid: 45930b4286dd61944928bf23e78a012f, type: 2}
   - description: MaxHealth
-    _useLocalValue: 0
+    _useLocalValue: 1
     _localValue: 0
     _variable: {fileID: 11400000, guid: c8a281c414fa2ac42a65854582544191, type: 2}
   - description: Energy
-    _useLocalValue: 0
+    _useLocalValue: 1
     _localValue: 0
     _variable: {fileID: 11400000, guid: 8003633441f052a4d8b03d3643e7b6cb, type: 2}
   - description: MaxEnergy
-    _useLocalValue: 0
+    _useLocalValue: 1
     _localValue: 0
     _variable: {fileID: 11400000, guid: 0ba6d273e574ebd4fa08885c571eecaf, type: 2}
   - description: Shield
-    _useLocalValue: 0
+    _useLocalValue: 1
     _localValue: 0
     _variable: {fileID: 11400000, guid: 613bda2210d14314fa9a005f5faa085d, type: 2}
   - description: MaxShield
-    _useLocalValue: 0
+    _useLocalValue: 1
     _localValue: 0
     _variable: {fileID: 11400000, guid: 4e6bbd8c6ad36b643990a7d76e25ceed, type: 2}
   - description: MaxHealth

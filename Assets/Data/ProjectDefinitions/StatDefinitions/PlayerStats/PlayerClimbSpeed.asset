@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb0b24829539dda43be5d2053784f49a, type: 3}
-  m_Name: PlayerMaxSpeed
+  m_Name: PlayerClimbSpeed
   m_EditorClassIdentifier: Assembly-CSharp::FloatVariable
-  DeveloperDescription: The absolute maximum of MS a player can project at any given
-    moment
-  _initialValue: 500
+  DeveloperDescription: 
+  _initialValue: 10
+  _minValue: 0
+  _maxValue: 9999

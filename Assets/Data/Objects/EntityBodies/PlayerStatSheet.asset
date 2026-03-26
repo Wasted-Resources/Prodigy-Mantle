@@ -12,7 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 551654acdf38105498ff1d5510eb5fe0, type: 3}
   m_Name: PlayerStatSheet
   m_EditorClassIdentifier: Assembly-CSharp::StatSheet
-  DeveloperDescription: 
+  DeveloperDescription: 'This is holding the references to the actual Live stats,
+    meaning that the initial stats will be set by the body definition and this is
+    keeping the references for singleton variables, all named Player[Variable]'
   _description: 
-  _floatStats: []
+  _floatStats:
+  - description: Health
+    _useLocalValue: 0
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: a43a2cc9986dfb041b8969f40451bef9, type: 2}
+  - description: MaxHealth
+    _useLocalValue: 0
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: 55799d349a71db640996acd20ceea4c5, type: 2}
+  - description: Shield
+    _useLocalValue: 0
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: 820f6fe61a6e9944fb20f078af1ce412, type: 2}
+  - description: MaxShield
+    _useLocalValue: 0
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: 95c7581a3599e1c4ebe3d6fab29a9f1f, type: 2}
+  - description: Energy
+    _useLocalValue: 0
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: e176c709769d9044390d7485a477d671, type: 2}
+  - description: MaxEnergy
+    _useLocalValue: 0
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: 5eef04a031e76ac49863b51f2cb301f8, type: 2}
+  - description: MovementSpeed
+    _useLocalValue: 0
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: 644778d377bb4fa46a19a3e6d9c7756f, type: 2}
+  - description: ClimbSpeed
+    _useLocalValue: 0
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: 644778d377bb4fa46a19a3e6d9c7756f, type: 2}
   _boolStats: []
