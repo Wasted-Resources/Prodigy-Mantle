@@ -15,4 +15,4 @@ MonoBehaviour:
   DeveloperDescription: 
   _bodyType: {fileID: 11400000, guid: afba9c0ff6d8554468251c5d5d42ad7c, type: 2}
   _statSheet: {fileID: 11400000, guid: 6fffe2210e88ec44ca9188e175a4c8de, type: 2}
-  _prefab: {fileID: 0}
+  _prefab: {fileID: 4370738642461991694, guid: 0157502af8cef924b8cb1f9c06f954de, type: 3}

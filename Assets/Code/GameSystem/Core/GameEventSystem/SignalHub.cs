@@ -32,7 +32,6 @@ Use side comments in line to describe lines that obfuscate their function as exp
 /// </summary>
 #endregion
 
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,32 +43,44 @@ public class SignalHub : GameEventListenerBase
     [TextArea] public string DeveloperDescription = string.Empty ;
 #endif
     [SerializeField] private List<GameEventResponse> _eventResponse = new();
+    [SerializeField] private List<GameObjectEventResponse> _gameObjectResponse = new();
     #endregion
     #region Internal
-
+    private RuntimeStats _activeStats ;
     protected override GameEventBase EventBase => null;
     #endregion
 
 
     #region Methods
+    void Awake()
+    {
+        _activeStats = GetComponentInParent<RuntimeStats>();
+    }
     private void OnEnable()
     {
         foreach (var r in _eventResponse) r.Event.RegisterListener(this) ;
+        foreach (var r in _gameObjectResponse) r.Event.RegisterListener(this);
     }
     private void OnDisable()
     {
         foreach (var r in _eventResponse) r.Event.DeregisterListener(this) ;
+        foreach (var r in _gameObjectResponse) r.Event.DeregisterListener(this);
     }
     public override void OnEventRaised(GameEventBase sender, object data)
     {
-        if (data is GameObject target && (target == gameObject || target == transform.root.gameObject))
+        foreach (var r in _eventResponse)
         {
-            foreach (var r in _eventResponse)
+            if (r.Event == sender) r.Raise();
+        }
+        if (data is GameObject payload && (payload == gameObject || transform.IsChildOf(payload.transform))) 
+        {
+            foreach (var r in _gameObjectResponse)
             {
                 if (r.Event == sender) r.Raise() ;
             }
         }
     }
+    public RuntimeStats GetActiveStats() => _activeStats;
     #endregion
 
 }

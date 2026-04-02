@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FloatVariable
   DeveloperDescription: Player's current Health
   _initialValue: 100
+  _runtimeValue: 100
+  _minValue: 0
+  _maxValue: 9999

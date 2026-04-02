@@ -150,5 +150,15 @@ public class GameEventResponse
     #endregion
 }
 [Serializable]
+public class GameObjectEventResponse
+{
+    #region Inspector
+    [SerializeField] private GameObjectEvent _gameObjectEvent ;
+    [SerializeField] private UnityEvent _response ;
+    #endregion
+    public GameEventBase Event => _gameObjectEvent;
+    public void Raise() => _response?.Invoke();
+}
+[Serializable]
 public class GameObjectUnityEvent : UnityEvent<GameObject> { }
 #endregion

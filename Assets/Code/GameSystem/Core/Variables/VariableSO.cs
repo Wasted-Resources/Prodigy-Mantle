@@ -50,7 +50,7 @@ public abstract class Variable<T> : ScriptableObject, ISerializationCallbackRece
 
 
     #region Runtime
-    private T _runtimeValue ;
+    [SerializeField] private T _runtimeValue ;
     public T Value
     {
         get => _runtimeValue;

@@ -41,75 +41,61 @@ using UnityEngine;
 
 public abstract class GameEventBase : ScriptableObject
 {
-    #region Inspector
-#if UNITY_EDITOR
-    [TextArea] public string DeveloperDescription = string.Empty ;
-#endif
-    #endregion
-
-
-    #region Internal
-    // List of listeners currently registered to this event
-    private readonly List<GameEventListenerBase> _listeners = new() ;
-    private bool _isRaising ;
-    #endregion
-
-
-    #region Methods
-    /// <summary>
-    /// Broadcasts this event to all currently registered listeners. Call this from any MonoBehaviour or ScriptableObject that owns a reference to this asset.
-    /// </summary>
-    public void NotifyListeners(object data)
+    #region Consolidated Logic
+    protected void SystemNotify(IEnumerable<GameEventListenerBase> listeners, object data)
     {
-        if (_isRaising) return ;
-        _isRaising = true ;
-        // Backwards Iteration is established to so listeners can safely deregister themselves during their own response without invalidating the loop on accident.
-        for (int i = _listeners.Count -1 ; i >= 0 ; i--)
+        foreach (var listener in listeners)
         {
-            _listeners[i].OnEventRaised(this, data) ;
+            listener.OnEventRaised(this, data) ;
         }
-        _isRaising = false ;
     }
-    
-    /// <summary>
-    /// Registers a listener to receive notification when this event is raised. Called automatically by GameEventListener.OnEnable.
-    /// </summary>
-    /// <param name="listener">The GameEventListener component registering itself</param>
-    public void RegisterListener(GameEventListenerBase listener)
+
+    protected void SystemRegister<T>(List<T> list, T listener) where T : GameEventListenerBase
     {
-        if(!_listeners.Contains(listener))  _listeners.Add(listener) ;
+        if (!list.Contains(listener)) list.Add(listener) ;
     }
 
-    /// <summary>
-    /// Removes a listener from the notification list. Called automatically by GameEventListener.OnDisable.
-    /// </summary>
-    /// <param name="listener">The GameEventListener component de-registering itself</param>
-    public void DeregisterListener(GameEventListenerBase listener)
+    protected void SystemDeregister<T>(List<T> list, T listener) where T : GameEventListenerBase
     {
-        if(_listeners.Contains(listener))   _listeners.Remove(listener);
+        if (list.Contains(listener)) list.Remove(listener) ;
     }
-
-
     #endregion
+
+    public abstract void RegisterListener(GameEventListenerBase listener) ;
+    public abstract void DeregisterListener(GameEventListenerBase listener) ;
 }
 
-[CreateAssetMenu(fileName ="New GameEvent", menuName ="Events/Game Event")]
-
+[CreateAssetMenu(fileName = "New GameEvent", menuName = "Events/Game Event")]
 public class GameEvent : GameEventBase
 {
-    /// <summary>
-    /// Broadcasts this signal to all registered listeners without payload.
-    /// Used for transitions and queries where no data is needed.
-    /// </summary>
-    public void Raise() => NotifyListeners(null) ;
+    [SerializeField] private List<GameEventListener> _listeners = new();
+
+    public void Raise() => SystemNotify(_listeners, null);
+
+    public override void RegisterListener(GameEventListenerBase listener)
+    {
+        if (listener is GameEventListener specific) SystemRegister(_listeners, specific);
+    }
+
+    public override void DeregisterListener(GameEventListenerBase listener)
+    {
+        if (listener is GameEventListener specific) SystemDeregister(_listeners, specific);
+    }
 }
 
 public abstract class GameEvent<T> : GameEventBase
 {
-    /// <summary>
-    /// Broadcasts this signal to all registered listeners with an attached payload.
-    /// The payload is passed through the notification chain. How to implement these, look into TypeGameEventListener
-    /// </summary>
-    /// <param name="data"></param>
-    public void Raise(T data) => NotifyListeners(data) ;
+    [SerializeField] private List<TypedGameEventListener<T, GameEvent<T>>> _listeners = new();
+
+    public void Raise(T data) => SystemNotify(_listeners, data);
+
+    public override void RegisterListener(GameEventListenerBase listener)
+    {
+        if (listener is TypedGameEventListener<T, GameEvent<T>> specific) SystemRegister(_listeners, specific);
+    }
+
+    public override void DeregisterListener(GameEventListenerBase listener)
+    {
+        if (listener is TypedGameEventListener<T, GameEvent<T>> specific) SystemDeregister(_listeners, specific);
+    }
 }

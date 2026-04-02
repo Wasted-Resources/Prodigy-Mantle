@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FloatVariable
   DeveloperDescription: Usually the movement speed at whch the player runs
   _initialValue: 20
+  _runtimeValue: 20
   _minValue: 0
   _maxValue: 9999

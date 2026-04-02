@@ -42,12 +42,28 @@ MonoBehaviour:
     _useLocalValue: 1
     _localValue: 0
     _variable: {fileID: 11400000, guid: 4e6bbd8c6ad36b643990a7d76e25ceed, type: 2}
-  - description: MaxHealth
+  - description: MovementSpeed
+    _useLocalValue: 1
+    _localValue: 10
+    _variable: {fileID: 11400000, guid: 6e1c353ad2a408c4e8cc18daa511a362, type: 2}
+  - description: ClimbSpeed
+    _useLocalValue: 1
+    _localValue: 10
+    _variable: {fileID: 11400000, guid: bffdbafbf4da9db4996ef2b479b10890, type: 2}
+  - description: Acceleration
+    _useLocalValue: 1
+    _localValue: 100
+    _variable: {fileID: 11400000, guid: dc3503f6a1a22c14a8c560cbcaaac31c, type: 2}
+  _boolStats:
+  - description: IsJumping
     _useLocalValue: 1
     _localValue: 0
-    _variable: {fileID: 11400000, guid: c8a281c414fa2ac42a65854582544191, type: 2}
-  - description: MaxHealth
+    _variable: {fileID: 11400000, guid: 68095f01513ec23479f9b09f5678ed94, type: 2}
+  - description: IsDashing
     _useLocalValue: 1
     _localValue: 0
-    _variable: {fileID: 11400000, guid: c8a281c414fa2ac42a65854582544191, type: 2}
-  _boolStats: []
+    _variable: {fileID: 11400000, guid: fcf342114b9b0b04ebf9c213d8480a83, type: 2}
+  - description: IsWallrunning
+    _useLocalValue: 1
+    _localValue: 0
+    _variable: {fileID: 11400000, guid: cffb63a9124d502458804c54b7df4bd2, type: 2}
