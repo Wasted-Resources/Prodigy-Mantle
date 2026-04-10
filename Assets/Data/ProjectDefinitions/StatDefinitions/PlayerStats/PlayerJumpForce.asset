@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlayerJumpForce
   m_EditorClassIdentifier: Assembly-CSharp::FloatVariable
   DeveloperDescription: 
-  _initialValue: 200
+  _initialValue: 15
+  _runtimeValue: 15
   _minValue: 0
   _maxValue: 9999

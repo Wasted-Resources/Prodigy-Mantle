@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80990746e3630264db29aaeb74b8f7ef, type: 3}
-  m_Name: FirePrimary_Event
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponEvent
-  DeveloperDescription: 
+  m_Script: {fileID: 11500000, guid: b7e79a89164d54547a192fa69fb3d782, type: 3}
+  m_Name: SecondaryAttack_Event
+  m_EditorClassIdentifier: Assembly-CSharp::GameEvent

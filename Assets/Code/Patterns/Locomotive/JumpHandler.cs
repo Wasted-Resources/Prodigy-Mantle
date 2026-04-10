@@ -33,7 +33,6 @@ Use side comments in line to describe lines that obfuscate their function as exp
 #endregion
 
 
-using System;
 using UnityEngine;
 
 
@@ -43,26 +42,51 @@ public class JumpHandler : MonoBehaviour
 #if UNITY_EDITOR
     [TextArea] public string DeveloperDescription = string.Empty;
 #endif
-    [SerializeField] private FloatReference _jumpForce; 
+    [SerializeField] private BoolReference _isJumping ;
+    [SerializeField] private BoolReference _isGrounded ;
+    [SerializeField] private BoolReference _isWallrunning ;
+    [SerializeField] private FloatReference _jumpForce;
+    [SerializeField] private Vector3Reference _wallNormal ;
+    [SerializeField] private IntReference _maxJumps ;
     #endregion
 
     #region Internal
-    private IImpulse _motor;
-    private IMotionBody _body;
+    private IImpulse _motor ;
+    private int _currentJumps ;
     #endregion
 
     #region Methods
-    private void Awake()
+    private void Awake() => _motor = GetComponent<IImpulse>() ;
+    void OnEnable()
     {
-        _motor = GetComponent<IImpulse>();
-        _body = GetComponent<IMotionBody>(); //
+        _isJumping.Variable.OnValueChanged += OnInputChanged;
+    }
+    void OnDisable()
+    {
+        _isJumping.Variable.OnValueChanged -= OnInputChanged;
     }
 
-    public void Execute(GameObject sender)
+    private void OnInputChanged(bool isPressed)
     {
-        if (_body != null && _body.IsGrounded)
+        if (!isPressed) return ;
+        Vector3 upForce = Vector3.up * _jumpForce.Value;
+        // JUMP
+        if(_isGrounded.Value){
+            _currentJumps = 0;
+            _motor.ApplyForce(upForce) ;
+        }
+        // WALLJUMP
+        else if (_isWallrunning.Value)
         {
-            _motor?.ApplyForce(Vector3.up * _jumpForce.Value);
+            _currentJumps = 1 ;
+            Vector3 horForce = _wallNormal.Value * _jumpForce.Value * 20f; // Hate the Character Controller
+            _motor.ApplyForce(horForce + upForce) ;
+        }
+        // DOUBLEJUMP
+        else if(_currentJumps < _maxJumps.Value -1)
+        {
+            _currentJumps++ ;
+            _motor.ApplyForce(upForce * 0.8f);
         }
     }
     #endregion

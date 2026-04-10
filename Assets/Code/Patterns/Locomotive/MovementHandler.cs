@@ -49,11 +49,23 @@ public class MovementHandler : MonoBehaviour
     #region Internal
     private ISetDirection _receiver;
     void Awake() => _receiver = GetComponent<ISetDirection>();
+
+    private void Update()
+    {
+        if (_moveInput.Value != Vector2.zero)
+        {
+            Execute();
+        }
+        else
+        {
+            _receiver.SetMoveDirection(Vector3.zero);
+        }
+    }
     #endregion
 
 
     #region Methods
-    public void Execute(GameObject sender)
+    public void Execute()
     {
         Vector3 lookDir = _cameraForward.Value ;
         Vector3 moveForward = new Vector3(lookDir.x, 0 ,lookDir.z).normalized ;

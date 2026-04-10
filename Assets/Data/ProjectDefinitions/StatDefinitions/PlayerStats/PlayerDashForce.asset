@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlayerDashForce
   m_EditorClassIdentifier: Assembly-CSharp::FloatVariable
   DeveloperDescription: 
-  _initialValue: 200
+  _initialValue: 150
+  _runtimeValue: 150
   _minValue: 0
   _maxValue: 9999

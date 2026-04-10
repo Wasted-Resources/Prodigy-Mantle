@@ -39,63 +39,26 @@ Use side comments in line to describe lines that obfuscate their function as exp
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class GameEventBase : ScriptableObject
+[CreateAssetMenu(fileName = "New GameEvent", menuName = "Events/Game Event")]
+public class GameEvent : ScriptableObject
 {
-    #region Consolidated Logic
-    protected void SystemNotify(IEnumerable<GameEventListenerBase> listeners, object data)
+    private readonly List<GameEventListener> _listeners = new();
+
+    public void Raise()
     {
-        foreach (var listener in listeners)
+        for (int i = _listeners.Count - 1; i >= 0; i--)
         {
-            listener.OnEventRaised(this, data) ;
+            _listeners[i].OnEventRaised();
         }
     }
 
-    protected void SystemRegister<T>(List<T> list, T listener) where T : GameEventListenerBase
+    public void RegisterListener(GameEventListener listener)
     {
-        if (!list.Contains(listener)) list.Add(listener) ;
+        if (!_listeners.Contains(listener)) _listeners.Add(listener);
     }
 
-    protected void SystemDeregister<T>(List<T> list, T listener) where T : GameEventListenerBase
+    public void DeregisterListener(GameEventListener listener)
     {
-        if (list.Contains(listener)) list.Remove(listener) ;
-    }
-    #endregion
-
-    public abstract void RegisterListener(GameEventListenerBase listener) ;
-    public abstract void DeregisterListener(GameEventListenerBase listener) ;
-}
-
-[CreateAssetMenu(fileName = "New GameEvent", menuName = "Events/Game Event")]
-public class GameEvent : GameEventBase
-{
-    [SerializeField] private List<GameEventListener> _listeners = new();
-
-    public void Raise() => SystemNotify(_listeners, null);
-
-    public override void RegisterListener(GameEventListenerBase listener)
-    {
-        if (listener is GameEventListener specific) SystemRegister(_listeners, specific);
-    }
-
-    public override void DeregisterListener(GameEventListenerBase listener)
-    {
-        if (listener is GameEventListener specific) SystemDeregister(_listeners, specific);
-    }
-}
-
-public abstract class GameEvent<T> : GameEventBase
-{
-    [SerializeField] private List<TypedGameEventListener<T, GameEvent<T>>> _listeners = new();
-
-    public void Raise(T data) => SystemNotify(_listeners, data);
-
-    public override void RegisterListener(GameEventListenerBase listener)
-    {
-        if (listener is TypedGameEventListener<T, GameEvent<T>> specific) SystemRegister(_listeners, specific);
-    }
-
-    public override void DeregisterListener(GameEventListenerBase listener)
-    {
-        if (listener is TypedGameEventListener<T, GameEvent<T>> specific) SystemDeregister(_listeners, specific);
+        if (_listeners.Contains(listener)) _listeners.Remove(listener);
     }
 }

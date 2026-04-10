@@ -46,6 +46,8 @@ public class LocomotivePattern : MonoBehaviour, ISetDirection, IImpulse
     [SerializeField] private FloatReference _acceleration ;
     [SerializeField] private FloatReference _maxSpeed ;
     [SerializeField] private BoolReference _useGravity ;
+    [SerializeField] private BoolReference _isGrounded ;
+    [SerializeField] private Transform _visualRoot;
     #endregion
 
 
@@ -54,40 +56,54 @@ public class LocomotivePattern : MonoBehaviour, ISetDirection, IImpulse
     private Vector3 _inputDir ;
     private Vector3 _impulse ;
     private float _verticalVelocity ;
+    private float _inputLockoutTimer;
     #endregion
 
 
     #region Methods
     void Awake()
     {
-        _body = GetComponent<IMotionBody>();
+        _body = GetComponent<IMotionBody>() ?? GetComponentInChildren<IMotionBody>() ?? GetComponentInParent<IMotionBody>();
     }
 
-    public void SetMoveDirection(Vector3 direction){        Debug.Log($"3. Locomotive: Intent Received {direction}");
- _inputDir = direction; }
+    public void SetMoveDirection(Vector3 direction)=> _inputDir = direction;
 
-    public void ApplyForce(Vector3 force) => _impulse += force ;
+    public void ApplyForce(Vector3 force)
+    {
+        if (force.y != 0)
+            _verticalVelocity = force.y ;
+        if (new Vector2(force.x, force.z).magnitude > 0.01f)
+        {
+            _inputLockoutTimer = Time.time + 0.2f;
+        }
+        _impulse += new Vector3(force.x, 0 , force.z) ;
+    }
 
     private void Update()
     {
-        Debug.DrawRay(transform.position, _inputDir * 20, Color.green);
+        bool isLockedOut = Time.time < _inputLockoutTimer;
+        Vector3 Input = isLockedOut ? Vector3.zero : _inputDir ;
+
+        if (Input.sqrMagnitude > 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(_inputDir.normalized);
+            _visualRoot.rotation = Quaternion.Slerp(_visualRoot.rotation, targetRotation, Time.deltaTime*10f);
+        }
         if (_useGravity.Value)
         {
-            if (_body.IsGrounded && _verticalVelocity <0) _verticalVelocity = -2f;
-            else _verticalVelocity += Physics.gravity.y * Time.deltaTime;
-        }
-        else
-        {
-            _verticalVelocity = Mathf.Lerp(_verticalVelocity, 0, Time.deltaTime * _acceleration.Value );
+            if (_isGrounded.Value && _verticalVelocity <0)
+                _verticalVelocity = -2f;
+            else 
+                _verticalVelocity += Physics.gravity.y * 3f * Time.deltaTime; // Bandaid since CC and gravity hate each other. It only fuels my utter contempt for this component
         }
 
-        Vector3 targetVelocity = _inputDir * _moveSpeed.Value ;
-        Vector3 finalVelocity = targetVelocity + _impulse ;
+        Vector3 finalVelocity = (Input * _moveSpeed.Value) + _impulse ;
         finalVelocity.y = _verticalVelocity ;
 
         _body.Move(finalVelocity) ;
 
         _impulse = Vector3.Lerp(_impulse, Vector3.zero, Time.deltaTime * _acceleration.Value);
+        if (_impulse.sqrMagnitude < 0.001f) _impulse = Vector3.zero;
     }
     #endregion
 }

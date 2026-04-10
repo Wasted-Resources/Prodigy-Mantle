@@ -4,7 +4,6 @@ using UnityEngine;
 public class CharacterControllerAdapter : MonoBehaviour, IMotionBody
 {
     private CharacterController _cc ; 
-    public bool IsGrounded => _cc.isGrounded ;
 
     void Awake() => _cc = GetComponent<CharacterController>();
 

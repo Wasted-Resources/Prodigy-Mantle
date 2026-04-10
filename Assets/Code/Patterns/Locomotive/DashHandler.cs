@@ -45,18 +45,36 @@ public class DashHandler : MonoBehaviour
     [SerializeField] private FloatReference _dashPower; 
     [SerializeField] private Vector2Reference _moveInput;
     [SerializeField] private Vector3Reference _cameraForward;
+    [SerializeField] private BoolReference _isDashing ;
+    [SerializeField] private FloatReference _dashCooldown ;
     #endregion
 
 
     #region Internal
     private IImpulse _motor;
+    private float _nextDashTime ;
     #endregion
 
 
     #region Methods
     private void Awake() => _motor = GetComponent<IImpulse>();
-
-    public void Execute(GameObject sender)
+    void OnEnable()
+    {
+        _isDashing.Variable.OnValueChanged += HandleInput ;
+    }
+    void OnDisable()
+    {
+        _isDashing.Variable.OnValueChanged -= HandleInput ;
+    }
+    private void HandleInput(bool isPressed)
+    {
+        if (isPressed && Time.time >= _nextDashTime)
+        {
+            Execute();
+            _nextDashTime = Time.time + _dashCooldown.Value;
+        }
+    }
+    public void Execute()
     {
         Vector3 look = _cameraForward.Value;
         Vector3 moveForward = new Vector3(look.x, 0, look.z).normalized;
@@ -69,6 +87,7 @@ public class DashHandler : MonoBehaviour
             moveDir = transform.forward;
         }
 
-        _motor?.ApplyForce(moveDir.normalized * _dashPower.Value);    }
+        _motor?.ApplyForce(moveDir.normalized * _dashPower.Value);
+    }
     #endregion
 }
